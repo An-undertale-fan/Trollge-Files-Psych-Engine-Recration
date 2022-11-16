@@ -2325,6 +2325,8 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 		if (allowVcr)
 			ShadersHandler.vcr.update(elapsed);
+		if (allowChrome)
+			ShadersHandler.setChrome(chromeVal);
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
@@ -4541,7 +4543,7 @@ class PlayState extends MusicBeatState
 			camOther.setFilters([ShadersHandler.chromaticAberration]);
 		}
 	}
-	public static function addChrome(usedCam:String, noise:Float = 0) {
+	public static function addVcr(usedCam:String, noise:Float = 0) {
 		allowVcr = true;
 		ShadersHandler.setNoise(noise);
 		switch(usedCam) {
