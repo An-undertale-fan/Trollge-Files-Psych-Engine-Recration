@@ -92,7 +92,7 @@ class FunkinLua {
 		accessedProps = new Map<String, Dynamic>();
 		#end
 		//shaders
-		set('chromeValue', PlayState.instance.chromeVal);
+		set('chromeValue', PlayState.chromeVal);
 		// Lua shit
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
@@ -1806,7 +1806,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "doChromeTween", function(from:Float, to:Float, duration:Float) {
 		FlxTween.num(from, to, duration, {ease: FlxEase.cubeOut}, function(num:Float)
 			{
-				PlayState.instance.chromeVal = num;
+				PlayState.chromeVal = num;
 			});			
 		});
 		call('onCreate', []);
