@@ -11,16 +11,10 @@ class ShadersHandler
 	public static var vcr:ShaderFilter = new ShaderFilter(new Vcr());
 
 	public static function setChrome(all:Float, chromeOffsetR:Float, chromeOffsetG:Float, chromeOffsetB:Float):Void
-	{	if (chromeOffsetR != null && chromeOffsetG != null && chromeOffsetB != null) {
+		{
 		chromaticAberration.shader.data.rOffset.value = [chromeOffsetR];
 		chromaticAberration.shader.data.gOffset.value = [chromeOffsetG];
 		chromaticAberration.shader.data.bOffset.value = [chromeOffsetB];
-		}
-		if (chromeOffsetR == null && chromeOffsetG == null && chromeOffsetB == null) {
-	 	chromaticAberration.shader.data.rOffset.value = [all];
-		chromaticAberration.shader.data.gOffset.value = [all];
-		chromaticAberration.shader.data.bOffset.value = [all];
-	 	}
 	}
     public static function setNoise(value:Float) {
         vcr.shader.data.noisePercent.value[0] = value;
