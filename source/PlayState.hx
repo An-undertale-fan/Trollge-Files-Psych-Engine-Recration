@@ -75,6 +75,10 @@ class PlayState extends MusicBeatState
 	public static var chromeVal:Float = 0;
 	public static var allowChrome:Bool;
 	public static var allowVcr:Bool;
+	public var camGameShaders:Array<ShaderEffect> = [];
+        public var camHUDShaders:Array<ShaderEffect> = [];
+        public var camOtherShaders:Array<ShaderEffect> = [];
+        public var shaderUpdates:Array<Float->Void> = [];
 
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
@@ -2323,10 +2327,10 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		if (allowVcr)
-			ShadersHandler.vcr.update(elapsed);
+		// (allowVcr)
+			//adersHandler.vcr.update(elapsed);
 		if (allowChrome)
-			ShadersHandler.setChrome(chromeVal);
+			ShadersHandler.setChrome(chromeVal, chromeVal, chromeVal, chromeVal);
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
@@ -4526,10 +4530,10 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
-	public static function addChrome(value:Float, usedCam:String) {
+	public function addChrome(value:Float, usedCam:String) {
 		chromeVal = value;
 		allowChrome = true;
-		ShadersHandler.setChrome(chromeVal);
+		ShadersHandler.setChrome(chromeVal, chromeVal, chromeVal, chromeVal);
 		switch(usedCam) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.chromaticAberration]);
@@ -4543,7 +4547,7 @@ class PlayState extends MusicBeatState
 			camOther.setFilters([ShadersHandler.chromaticAberration]);
 		}
 	}
-	public static function addVcr(usedCam:String, noise:Float = 0) {
+	public function addVcr(usedCam:String, noise:Float = 0) {
 		allowVcr = true;
 		ShadersHandler.setNoise(noise);
 		switch(usedCam) {
@@ -4557,6 +4561,24 @@ class PlayState extends MusicBeatState
 			camGame.setFilters([ShadersHandler.vcr]);
 			camHUD.setFilters([ShadersHandler.vcr]);
 			camOther.setFilters([ShadersHandler.vcr]);
+		}
+	}
+	public function clearShaderFromCamera(cam:String)
+	{
+		switch (cam.toLowerCase())
+		{
+			case 'camhud' | 'hud':
+				camHUDShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+				camOtherShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camOther.setFilters(newCamEffects);
+			default:
+				camGameShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camGame.setFilters(newCamEffects);
 		}
 	}
 }
