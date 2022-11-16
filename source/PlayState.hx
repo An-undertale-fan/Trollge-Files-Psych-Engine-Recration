@@ -59,6 +59,9 @@ import DialogueBoxPsych;
 import sys.FileSystem;
 #end
 import Shaders;
+import ShadersHandler;
+import Vcr;
+import ChromaticAberration;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
 
@@ -66,6 +69,13 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	//shaders stuff
+	public static var chromaticAberrationShader:ChromaticAberration;
+	public static var vcrShader:Vcr;
+	public static var chromeVal:Float = 0;
+	public static var allowChrome:Bool;
+	public static var allowVcr:Bool;
+
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
@@ -87,12 +97,6 @@ class PlayState extends MusicBeatState
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
-
-	// Shader stuff
-	public var camGameShaders:Array<ShaderEffect> = [];
-        public var camHUDShaders:Array<ShaderEffect> = [];
-        public var camOtherShaders:Array<ShaderEffect> = [];
-        public var shaderUpdates:Array<Float->Void> = [];
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -1322,103 +1326,6 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function addShaderToCamera(cam:String, effect:ShaderEffect)
-	{ // STOLE FROM ANDROMEDA
-		if (ClientPrefs.flashing) { // to avoid epilepsia or smth idk
-		switch (cam.toLowerCase())
-		{
-			case 'camhud' | 'hud':
-				camHUDShaders.push(effect);
-				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-				for (i in camHUDShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other':
-				camOtherShaders.push(effect);
-				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-				for (i in camOtherShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camOther.setFilters(newCamEffects);
-			case 'camgame' | 'game':
-				camGameShaders.push(effect);
-				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-				for (i in camGameShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camGame.setFilters(newCamEffects);
-			default:
-				if (modchartSprites.exists(cam))
-				{
-					Reflect.setProperty(modchartSprites.get(cam), "shader", effect.shader);
-				}
-				else if (modchartTexts.exists(cam))
-				{
-					Reflect.setProperty(modchartTexts.get(cam), "shader", effect.shader);
-				}
-				else
-				{
-					var OBJ = Reflect.getProperty(PlayState.instance, cam);
-					Reflect.setProperty(OBJ, "shader", effect.shader);
-				}
-			}
-		}
-	}
-	
-	public function removeShaderFromCamera(cam:String, effect:ShaderEffect)
-	{
-		switch (cam.toLowerCase())
-		{
-			case 'camhud' | 'hud':
-				camHUDShaders.remove(effect);
-				var newCamEffects:Array<BitmapFilter> = [];
-				for (i in camHUDShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other':
-				camOtherShaders.remove(effect);
-				var newCamEffects:Array<BitmapFilter> = [];
-				for (i in camOtherShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camOther.setFilters(newCamEffects);
-			default:
-				camGameShaders.remove(effect);
-				var newCamEffects:Array<BitmapFilter> = [];
-				for (i in camGameShaders)
-				{
-					newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camGame.setFilters(newCamEffects);
-		}
-	}
-	
-	public function clearShaderFromCamera(cam:String)
-	{
-		switch (cam.toLowerCase())
-		{
-			case 'camhud' | 'hud':
-				camHUDShaders = [];
-				var newCamEffects:Array<BitmapFilter> = [];
-				camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other':
-				camOtherShaders = [];
-				var newCamEffects:Array<BitmapFilter> = [];
-				camOther.setFilters(newCamEffects);
-			default:
-				camGameShaders = [];
-				var newCamEffects:Array<BitmapFilter> = [];
-				camGame.setFilters(newCamEffects);
-		}
-	}
-
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
 			char.setPosition(GF_X, GF_Y);
@@ -2416,6 +2323,8 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+		if (allowVcr)
+			ShadersHandler.vcr.update(elapsed);
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
@@ -4615,4 +4524,37 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
+	public static function addChrome(value:Float, usedCam:String) {
+		chromeVal = value;
+		allowChrome = true;
+		ShadersHandler.setChrome(chromeVal);
+		switch(usedCam) {
+			case 'camGame' | 'camGAME' | 'game':
+			camGame.setFilters([ShadersHandler.chromaticAberration]);
+			case 'camHud' | 'camHUD' | 'hud':
+			camHUD.setFilters([ShadersHandler.chromaticAberration]);
+			case 'camOTHER' |  'camOther' | 'other':
+			camOther.setFilters([ShadersHandler.chromaticAberration]);
+			default:
+			camGame.setFilters([ShadersHandler.chromaticAberration]);
+			camHUD.setFilters([ShadersHandler.chromaticAberration]);
+			camOther.setFilters([ShadersHandler.chromaticAberration]);
+		}
+	}
+	public static function addChrome(usedCam:String, noise:Float = 0) {
+		allowVcr = true;
+		ShadersHandler.setNoise(noise);
+		switch(usedCam) {
+			case 'camGame' | 'camGAME' | 'game':
+			camGame.setFilters([ShadersHandler.vcr]);
+			case 'camHud' | 'camHUD' | 'hud':
+			camHUD.setFilters([ShadersHandler.vcr]);
+			case 'camOTHER' |  'camOther' | 'other':
+			camOther.setFilters([ShadersHandler.vcr]);
+			default:
+			camGame.setFilters([ShadersHandler.vcr]);
+			camHUD.setFilters([ShadersHandler.vcr]);
+			camOther.setFilters([ShadersHandler.vcr]);
+		}
+	}
 }
