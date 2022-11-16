@@ -23,9 +23,9 @@ class ShadersHandler
 	 	}
 	}
     public static function setNoise(value:Float) {
-        vcr.noisePercent.value[0] = value;
+        vcr.shader.data.noisePercent.value[0] = value;
     }
     public static function setITime(value:Float) {
-        vcr.iTime.value[0] = value;
+        vcr.shader.data.iTime.value[0] = value;
     }
 }
