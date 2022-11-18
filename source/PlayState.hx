@@ -2330,7 +2330,7 @@ class PlayState extends MusicBeatState
 		// (allowVcr)
 			//adersHandler.vcr.update(elapsed);
 		if (allowChrome)
-			ShadersHandler.setChrome(chromeVal, chromeVal, chromeVal, chromeVal);
+			ShadersHandler.setChrome(chromeVal);
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
@@ -4533,7 +4533,7 @@ class PlayState extends MusicBeatState
 	public function addChrome(value:Float, usedCam:String) {
 		chromeVal = value;
 		allowChrome = true;
-		ShadersHandler.setChrome(chromeVal, chromeVal, chromeVal, chromeVal);
+		ShadersHandler.setChrome(chromeVal);
 		switch(usedCam) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.chromaticAberration]);
