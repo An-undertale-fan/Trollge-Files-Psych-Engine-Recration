@@ -76,9 +76,9 @@ class PlayState extends MusicBeatState
 	public static var allowChrome:Bool;
 	public static var allowVcr:Bool;
 	public var camGameShaders:Array<ShaderEffect> = [];
-        public var camHUDShaders:Array<ShaderEffect> = [];
-        public var camOtherShaders:Array<ShaderEffect> = [];
-        public var shaderUpdates:Array<Float->Void> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+    public var camOtherShaders:Array<ShaderEffect> = [];
+    public var shaderUpdates:Array<Float->Void> = [];
 
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
@@ -1218,6 +1218,7 @@ class PlayState extends MusicBeatState
 
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
+		vcrShader = new Vcr();
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -2327,8 +2328,9 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		// (allowVcr)
-			//adersHandler.vcr.update(elapsed);
+		(allowVcr)
+			Vcr.update(elapsed);
+
 		if (allowChrome)
 			ShadersHandler.setChrome(chromeVal);
 
@@ -4550,17 +4552,23 @@ class PlayState extends MusicBeatState
 	public function addVcr(usedCam:String, noise:Float = 0) {
 		allowVcr = true;
 		ShadersHandler.setNoise(noise);
-		switch(usedCam) {
+		switch(usedCam.toLowerCase()) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.vcr]);
+			camGame.shader = vcrShader;
 			case 'camHud' | 'camHUD' | 'hud':
-			camHUD.setFilters([ShadersHandler.vcr]);
+			//camHUD.setFilters([ShadersHandler.vcr]);
+			camHUD.shader = vcrShader;
 			case 'camOTHER' |  'camOther' | 'other':
-			camOther.setFilters([ShadersHandler.vcr]);
+			//camOther.setFilters([ShadersHandler.vcr]);
+			camOther.shader = vcrShader;
 			default:
-			camGame.setFilters([ShadersHandler.vcr]);
+			/*camGame.setFilters([ShadersHandler.vcr]);
 			camHUD.setFilters([ShadersHandler.vcr]);
-			camOther.setFilters([ShadersHandler.vcr]);
+			camOther.setFilters([ShadersHandler.vcr]);*/
+			camGame.shader = vcrShader;
+			camHUD.shader = vcrShader;
+            camOther.shader = vcrShader;
 		}
 	}
 	public function clearShaderFromCamera(cam:String)
