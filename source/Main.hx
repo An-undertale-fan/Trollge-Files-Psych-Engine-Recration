@@ -32,7 +32,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-
+		SUtil.checkPermissions();
  	        SUtil.uncaughtErrorHandler();
 
 		if (stage != null)
