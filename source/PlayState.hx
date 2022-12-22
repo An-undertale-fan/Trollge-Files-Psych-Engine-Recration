@@ -4587,7 +4587,7 @@ class PlayState extends MusicBeatState
 			camOther.setFilters([ShadersHandler.vcr]);
 			camGame.shader = vcrShader;
 			camHUD.shader = vcrShader;
-            camOther.shader = vcrShader;*/
-		}
+            camOther.shader = vcrShader;
+		}*/
 	}
 }
