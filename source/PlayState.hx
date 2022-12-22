@@ -2328,7 +2328,7 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		(allowVcr)
+		if (allowVcr)
 			Vcr.update(elapsed);
 
 		if (allowChrome)
