@@ -96,14 +96,10 @@ class PlayState extends MusicBeatState
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var vcrSprites:Array<FlxSprite> = [
-		[dad],
-		[gf],
-		[boyfriend],
 		[strumLine],
 		[countdownReady],
 		[countdownSet],
 		[countdownGo],
-		[rating],
 		[comboSpr],
 		[numScore],
 		[iconP1],
@@ -4571,6 +4567,8 @@ class PlayState extends MusicBeatState
 				
 		healthBarBg.shader = vcrShader;
 		healthBar.shader = vcrShader;
+		botplayText.shader = vcrShader;
+		scoreText.shader = vcrShader;
 		/*switch(usedCam.toLowerCase()) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.vcr]);
