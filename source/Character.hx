@@ -82,7 +82,6 @@ class Character extends FlxSprite
 	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
 	{
 		super(x, y);
-
 		#if (haxe >= "4.0.0")
 		animOffsets = new Map();
 		#else
@@ -92,6 +91,9 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 		antialiasing = ClientPrefs.globalAntialiasing;
 		var library:String = null;
+		if (PlayState.allowVcr)
+			this.shader = PlayState.vcrShader; //please work
+		
 		switch (curCharacter)
 		{
 			//case 'your character name in case you want to hardcode them instead':
