@@ -96,9 +96,11 @@ class SUtil
                 FileSystem.createDirectory(SUtil.getPath() + 'mods');
             }
 
-         if (FileSystem.exists( SUtil.getPath() + 'assets') && !FileSystem.isDirectory( SUtil.getPath() + 'assets') && FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods')) ||
+         if ((FileSystem.exists( SUtil.getPath() + 'assets') && !FileSystem.isDirectory( SUtil.getPath() + 'assets')) && (FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods')) ||
+
         (FileSystem.exists( SUtil.getPath() + 'assets') && !FileSystem.isDirectory( SUtil.getPath() + 'assets')) ||
-         (FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods'))
+
+        (FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods')))
 			{
 				Lib.application.window.alert("Woops, Look Like A Problem Happend While Trying To Cpoy The Game Files!\n Please Try Cpying The Game Data From The Apk To "+  SUtil.getPath +  " In This Case.",
 					'Error!');
