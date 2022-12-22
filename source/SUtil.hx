@@ -125,30 +125,31 @@ class SUtil
 
 	private static function onError(e:UncaughtErrorEvent):Void
 	{
-		var msg:String = '${e.error}\n';
+		var stack:Array<String> = [];
+		stack.push(e.error);
 
 		for (stackItem in CallStack.exceptionStack(true))
 		{
 			switch (stackItem)
 			{
 				case CFunction:
-					msg += 'Non-Haxe (C) Function';
+					stack.push('Non-Haxe (C) Function');
 				case Module(m):
-					msg += 'Module ($m)';
+					stack.push('Module ($m)');
 				case FilePos(s, file, line, column):
-					msg += '$file (line $line)';
+					stack.push('$file (line $line)');
 				case Method(classname, method):
-					msg += '$classname (method $method)';
+					stack.push('$classname (method $method)');
 				case LocalFunction(name):
-					msg += 'Local Function ($name)';
+					stack.push('Local Function ($name)');
 			}
-
-			msg += '\n';
 		}
 
 		e.preventDefault();
 		e.stopPropagation();
 		e.stopImmediatePropagation();
+
+		final msg:String = stack.join('\n');
 
 		#if sys
 		try
