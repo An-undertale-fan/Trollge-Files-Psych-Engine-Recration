@@ -95,7 +95,7 @@ class PlayState extends MusicBeatState
 		['Sick!', 1], //From 90% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
-	public var vcrSprites:Array<flixel.FlxSprite> = [
+	/*public var vcrSprites:Array<flixel.FlxSprite> = [
 		[strumLine],
 		[countdownReady],
 		[countdownSet],
@@ -104,7 +104,7 @@ class PlayState extends MusicBeatState
 		[numScore],
 		[iconP1],
 		[iconp2]
-	];
+	];*/
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
@@ -4542,6 +4542,18 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
+	public var vcrSprites:FlxSprite = [
+		[strumLine],
+		[countdownReady],
+		[countdownSet],
+		[countdownGo],
+		[comboSpr],
+		[numScore],
+		[iconP1],
+		[iconp2],
+		[rating]
+	];
+
 	public function addChrome(value:Float, usedCam:String) {
 		chromeVal = value;
 		allowChrome = true;
