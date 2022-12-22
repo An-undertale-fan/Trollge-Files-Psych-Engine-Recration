@@ -157,7 +157,7 @@ class PlayState extends MusicBeatState
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 
-	private var strumLine:FlxSprite;
+	public var strumLine:FlxSprite;
 
 	//Handles the new epic mega sexy cam code that i've done
 	private var camFollow:FlxPoint;
@@ -3826,7 +3826,6 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			/*boyfriend.stunned = true;
-
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{
@@ -4574,13 +4573,14 @@ class PlayState extends MusicBeatState
 	public function addVcr(usedCam:String, noise:Float = 0) {
 		allowVcr = true;
 		ShadersHandler.setNoise(noise);
-		for (i in vcrSprites)
+		for (i in vcrSprites.length) {
+			resetSpriteTag(i);
 			i.shader = vcrShader;
-				
-		healthBarBg.shader = vcrShader;
+		}
+		healthBarBG.shader = vcrShader;
 		healthBar.shader = vcrShader;
-		botplayText.shader = vcrShader;
-		scoreText.shader = vcrShader;
+		botplayTxt.shader = vcrShader;
+		scoreTxt.shader = vcrShader;
 		/*switch(usedCam.toLowerCase()) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.vcr]);
