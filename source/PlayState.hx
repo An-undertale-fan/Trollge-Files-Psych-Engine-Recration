@@ -4547,7 +4547,6 @@ class PlayState extends MusicBeatState
 		[countdownReady],
 		[countdownSet],
 		[countdownGo],
-		[comboSpr],
 		[numScore],
 		[iconP1],
 		[iconp2],
