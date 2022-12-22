@@ -32,7 +32,6 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		SUtil.checkPermissions();
  	        SUtil.uncaughtErrorHandler();
 
 		if (stage != null)
@@ -76,6 +75,7 @@ class Main extends Sprite
 		#end
 	
 		ClientPrefs.loadDefaultKeys();
+		SUtil.checkPermissions();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
