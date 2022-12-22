@@ -95,6 +95,20 @@ class PlayState extends MusicBeatState
 		['Sick!', 1], //From 90% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
+	public static var vcrSprites:Array<FlxSprite> = [
+		[dad],
+		[gf],
+		[boyfriend],
+		[strumLine],
+		[countdownReady],
+		[countdownSet],
+		[countdownGo],
+		[rating],
+		[comboSpr],
+		[numScore],
+		[iconP1],
+		[iconp2]
+	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
@@ -2329,7 +2343,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 		if (allowVcr)
-			Vcr.update(elapsed);
+			vcrShader.update(elapsed);
 
 		if (allowChrome)
 			ShadersHandler.setChrome(chromeVal);
@@ -4552,7 +4566,12 @@ class PlayState extends MusicBeatState
 	public function addVcr(usedCam:String, noise:Float = 0) {
 		allowVcr = true;
 		ShadersHandler.setNoise(noise);
-		switch(usedCam.toLowerCase()) {
+		for (i in vcrSprites)
+			i.shader = vcrShader;
+				
+		healthBarBg.shader = vcrShader;
+		healthBar.shader = vcrShader;
+		/*switch(usedCam.toLowerCase()) {
 			case 'camGame' | 'camGAME' | 'game':
 			camGame.setFilters([ShadersHandler.vcr]);
 			camGame.shader = vcrShader;
@@ -4563,12 +4582,12 @@ class PlayState extends MusicBeatState
 			//camOther.setFilters([ShadersHandler.vcr]);
 			camOther.shader = vcrShader;
 			default:
-			/*camGame.setFilters([ShadersHandler.vcr]);
+			camGame.setFilters([ShadersHandler.vcr]);
 			camHUD.setFilters([ShadersHandler.vcr]);
-			camOther.setFilters([ShadersHandler.vcr]);*/
+			camOther.setFilters([ShadersHandler.vcr]);
 			camGame.shader = vcrShader;
 			camHUD.shader = vcrShader;
-            camOther.shader = vcrShader;
+            camOther.shader = vcrShader;*/
 		}
 	}
 	public function clearShaderFromCamera(cam:String)
