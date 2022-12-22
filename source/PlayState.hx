@@ -3366,6 +3366,9 @@ class PlayState extends MusicBeatState
 		//
 
 		var rating:FlxSprite = new FlxSprite();
+		if (allowVcr)
+		rating.shader = vcrShader;
+
 		var score:Int = 350;
 
 		//tryna do MS based judgment due to popular demand
@@ -3503,6 +3506,8 @@ class PlayState extends MusicBeatState
 
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
+			if (allowVcr)
+				numScore.shader = vcrShader;
 
 			if (!PlayState.isPixelStage)
 			{
@@ -4547,10 +4552,8 @@ class PlayState extends MusicBeatState
 		[countdownReady],
 		[countdownSet],
 		[countdownGo],
-		[numScore],
 		[iconP1],
-		[iconp2],
-		[rating]
+		[iconp2]
 	];
 
 	public function addChrome(value:Float, usedCam:String) {
