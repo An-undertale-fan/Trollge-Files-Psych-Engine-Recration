@@ -95,7 +95,7 @@ class PlayState extends MusicBeatState
 		['Sick!', 1], //From 90% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
-	public static var vcrSprites:Array<FlxSprite> = [
+	public var vcrSprites:Array<FlxSprite> = [
 		[dad],
 		[gf],
 		[boyfriend],
