@@ -19,6 +19,8 @@ class HealthIcon extends FlxSprite
 		this.isPlayer = isPlayer;
 		changeIcon(char);
 		scrollFactor.set();
+		if (PlayState.allowVcr)
+			shader = PlayState.vcrShader;
 	}
 
 	override function update(elapsed:Float)
