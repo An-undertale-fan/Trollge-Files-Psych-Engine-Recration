@@ -4551,9 +4551,7 @@ class PlayState extends MusicBeatState
 		[strumLine],
 		[countdownReady],
 		[countdownSet],
-		[countdownGo],
-		[iconP1],
-		[iconP2]
+		[countdownGo]
 	];
 
 	public function addChrome(value:Float, usedCam:String) {
