@@ -1801,7 +1801,7 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
-			PlayState.instance.clearShaderFromCamera(camera);
+			//PlayState.instance.clearShaderFromCamera(camera);
 		});
 		Lua_helper.add_callback(lua, "addVcrShader", function(camera:String) {
 			PlayState.instance.addVcr(camera);
