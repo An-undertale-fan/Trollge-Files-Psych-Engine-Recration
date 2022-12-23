@@ -233,6 +233,8 @@ class Note extends FlxSprite
 			earlyHitMult = 1;
 		}
 		x += offsetX;
+	if (PlayState.allowVcr)
+		shader = PlayState.vcrShader;
 	}
 
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;
