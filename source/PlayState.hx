@@ -4566,9 +4566,5 @@ class PlayState extends MusicBeatState
 		countdownSet.shader = vcrShader;
 		countdownReady.shader = vcrShader;
 		strumLine.shader = vcrShader;
-		strumLineNotes.shader = vcrShader;
-		opponentStrums.shader = vcrShader;
-		playerStrums.shader = vcrShader;
-		grpNoteSplashes.shader = vcrShader;
 	}
 }
