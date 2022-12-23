@@ -47,7 +47,7 @@ jobs:
           haxelib install box2d --quiet
           haxelib install layout --quiet
           haxelib install systools --quiet
-          haxelib --never install flixel --quiet
+          haxelib --never install flixel 4.11.0 --quiet
           haxelib install flixel-tools --quiet
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
@@ -123,7 +123,7 @@ jobs:
           haxelib install box2d --quiet
           haxelib install layout --quiet
           haxelib install systools --quiet
-          haxelib --never install flixel --quiet
+          haxelib --never install flixel 4.11.0 --quiet
           haxelib install flixel-tools --quiet
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
