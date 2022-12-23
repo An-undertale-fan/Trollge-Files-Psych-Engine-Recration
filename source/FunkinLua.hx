@@ -1040,9 +1040,10 @@ class FunkinLua {
 			loadFrames(leSprite, image, spriteType);
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
-			if (PlayState.allowF)
+			new FlxTimer().start(1, function(tmr:FlxTimer) {
+			if (PlayState.allowVcr)
 				leSprite.shader = PlayState.vcrShader;
-		});
+			});
 
 		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int, height:Int, color:String) {
 			var colorNum:Int = Std.parseInt(color);
@@ -1056,8 +1057,10 @@ class FunkinLua {
 			var object:FlxSprite = Reflect.getProperty(getInstance(), obj);
 			if(object != null) {
 				object.makeGraphic(width, height, colorNum);
-				if (PlayState.allowVcr)
-					object.shader = PlayState.vcrShader;
+				new FlxTimer().start(1, function(tmr:FlxTimer) {
+			if (PlayState.allowVcr)
+				object.shader = PlayState.vcrShader;
+			});
 			}
 		});
 		Lua_helper.add_callback(lua, "addAnimationByPrefix", function(obj:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true) {
