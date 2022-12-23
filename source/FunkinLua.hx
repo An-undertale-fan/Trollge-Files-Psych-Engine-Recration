@@ -1027,8 +1027,10 @@ class FunkinLua {
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
+			new FlxTimer().start(1, function(tmr:FlxTimer) {
 			if (PlayState.allowVcr)
 				leSprite.shader = PlayState.vcrShader;
+			});
 		});
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
@@ -1038,7 +1040,7 @@ class FunkinLua {
 			loadFrames(leSprite, image, spriteType);
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
-			if (PlayState.allowVcr)
+			if (PlayState.allowF)
 				leSprite.shader = PlayState.vcrShader;
 		});
 
@@ -1803,8 +1805,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
 			//PlayState.instance.clearShaderFromCamera(camera);
 		});
-		Lua_helper.add_callback(lua, "addVcrShader", function(camera:String) {
-			PlayState.instance.addVcr(camera);
+		Lua_helper.add_callback(lua, "addVcrShader", function(allowEffects:Bool = false) {
+			PlayState.instance.addVcr(allowEffects);
 		});
 		Lua_helper.add_callback(lua, "addChromeShader", function(value:Float, camera:String) {
 			PlayState.instance.addChrome(value, camera);
