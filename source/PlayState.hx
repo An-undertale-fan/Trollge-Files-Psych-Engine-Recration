@@ -4563,7 +4563,7 @@ class PlayState extends MusicBeatState
 	public function addVcr(movement:Bool) {
 		allowVcr = true;
 		vcrUpdate = movement;
-		var hot:FlxTimer = new FlxTimer;
+		var hot:FlxTimer = new FlxTimer();
 		hot.start(1,1,onTimer);
 	}
 	function onTimer(timer:FlxTimer):Void
