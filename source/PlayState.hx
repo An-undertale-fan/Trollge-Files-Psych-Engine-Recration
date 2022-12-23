@@ -75,6 +75,7 @@ class PlayState extends MusicBeatState
 	public static var chromeVal:Float = 0;
 	public static var allowChrome:Bool;
 	public static var allowVcr:Bool;
+	public static var vcrUpdate:Bool = false;
 	public var camGameShaders:Array<ShaderEffect> = [];
 	public var camHUDShaders:Array<ShaderEffect> = [];
     public var camOtherShaders:Array<ShaderEffect> = [];
@@ -2329,7 +2330,7 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		if (allowVcr)
+		if (allowVcr && vcrUpdate)
 			vcrShader.update(elapsed);
 
 		if (allowChrome)
@@ -4549,22 +4550,35 @@ class PlayState extends MusicBeatState
 			camHUD.setFilters([ShadersHandler.chromaticAberration]);
 			case 'camOTHER' |  'camOther' | 'other':
 			camOther.setFilters([ShadersHandler.chromaticAberration]);
+			case '' | 'all' | 'full':
+			camGame.setFilters([ShadersHandler.chromaticAberration]);
+			camHUD.setFilters([ShadersHandler.chromaticAberration]);
+			camOther.setFilters([ShadersHandler.chromaticAberration]);
 			default:
 			camGame.setFilters([ShadersHandler.chromaticAberration]);
 			camHUD.setFilters([ShadersHandler.chromaticAberration]);
 			camOther.setFilters([ShadersHandler.chromaticAberration]);
 		}
 	}
-	public function addVcr(usedCam:String, noise:Float = 0) {
+	public function addVcr(movement:Bool) {
 		allowVcr = true;
-		ShadersHandler.setNoise(noise);
-		healthBarBG.shader = vcrShader;
-		healthBar.shader = vcrShader;
-		botplayTxt.shader = vcrShader;
-		scoreTxt.shader = vcrShader;
-		countdownGo.shader = vcrShader;
-		countdownSet.shader = vcrShader;
-		countdownReady.shader = vcrShader;
-		strumLine.shader = vcrShader;
+		vcrUpdate = movement;
+		var hot:FlxTimer = new FlxTimer;
+		hot.start(1,1,onTimer);
 	}
+	function onTimer(timer:FlxTimer):Void
+		{
+	healthBarBG.shader = vcrShader;
+	healthBar.shader = vcrShader;
+	botplayTxt.shader = vcrShader;
+	scoreTxt.shader = vcrShader;
+	countdownGo.shader = vcrShader;
+	countdownSet.shader = vcrShader;
+	countdownReady.shader = vcrShader;
+	strumLine.shader = vcrShader;
+	strumLineNotes.shader = vcrShader;
+	opponentStrums.shader = vcrShader;
+	playerStrums.shader = vcrShader;
+	grpNoteSplashes.shader = vcrShader;
+		}
 }
