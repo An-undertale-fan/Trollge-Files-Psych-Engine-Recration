@@ -14,8 +14,10 @@ class Boyfriend extends Character
 	public function new(x:Float, y:Float, ?char:String = 'bf')
 	{
 		super(x, y, char, true);
-		if (PlayState.allowVcr)
-			this.shader = PlayState.vcrShader;
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
+			if (PlayState.allowVcr)
+				shader = PlayState.vcrShader;
+			});
 	}
 
 	override function update(elapsed:Float)
