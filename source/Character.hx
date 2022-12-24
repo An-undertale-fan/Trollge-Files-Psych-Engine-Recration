@@ -17,6 +17,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
+import flixel.util.FlxTimer;
 
 using StringTools;
 
