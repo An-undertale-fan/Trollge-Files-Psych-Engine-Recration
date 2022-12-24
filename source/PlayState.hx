@@ -4563,11 +4563,7 @@ class PlayState extends MusicBeatState
 	public function addVcr(movement:Bool) {
 		allowVcr = true;
 		vcrUpdate = movement;
-		var hot:FlxTimer = new FlxTimer();
-		hot.start(1,1,onTimer);
-	}
-	function onTimer(timer:FlxTimer):Void
-		{
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
 	healthBarBG.shader = vcrShader;
 	healthBar.shader = vcrShader;
 	botplayTxt.shader = vcrShader;
@@ -4576,9 +4572,6 @@ class PlayState extends MusicBeatState
 	countdownSet.shader = vcrShader;
 	countdownReady.shader = vcrShader;
 	strumLine.shader = vcrShader;
-	strumLineNotes.shader = vcrShader;
-	opponentStrums.shader = vcrShader;
-	playerStrums.shader = vcrShader;
-	grpNoteSplashes.shader = vcrShader;
-		}
+		});
+	}
 }
