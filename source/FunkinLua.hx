@@ -1044,6 +1044,7 @@ class FunkinLua {
 			if (PlayState.allowVcr)
 				leSprite.shader = PlayState.vcrShader;
 			});
+		});
 
 		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int, height:Int, color:String) {
 			var colorNum:Int = Std.parseInt(color);
