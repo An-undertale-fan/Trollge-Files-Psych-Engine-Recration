@@ -266,7 +266,6 @@ class PlayState extends MusicBeatState
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
-	public var blackIntro:FlxSprite;
 
 	#if desktop
 	// Discord RPC variables
@@ -1222,6 +1221,10 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
 		vcrShader = new Vcr();
+		var blackIntro:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
+			-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+			blackIntro.scrollFactor.set();
+		add(blackIntro);
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1609,9 +1612,6 @@ class PlayState extends MusicBeatState
 				switch (swagCounter)
 				{
 					case 0:
-						blackIntro.makeGraphic(1280, 720, 0x000000);
-						blackIntro.screenCenter();
-						add(blackIntro);
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
 						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
