@@ -266,6 +266,7 @@ class PlayState extends MusicBeatState
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
+	public var blackIntro:FlxSprite;
 
 	#if desktop
 	// Discord RPC variables
@@ -1608,7 +1609,6 @@ class PlayState extends MusicBeatState
 				switch (swagCounter)
 				{
 					case 0:
-						var blackIntro:FlxSprite;
 						blackIntro.makeGraphic(1280, 720, 0x000000);
 						blackIntro.screenCenter();
 						add(blackIntro);
@@ -4592,12 +4592,12 @@ class PlayState extends MusicBeatState
 		allowVcr = true;
 		vcrUpdate = movement;
 		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-	if (countdownGo != null) {
+		if (countdownGo != null) {
 	blackIntro.shader = vcrShader;
 	countdownReady.shader = vcrShader;
 	countdownSet.shader = vcrShader;
 	countdownGo.shader = vcrShader;
-	}
+		}
 	healthBarBG.shader = vcrShader;
 	healthBar.shader = vcrShader;
 	botplayTxt.shader = vcrShader;
