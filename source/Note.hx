@@ -234,7 +234,7 @@ class Note extends FlxSprite
 			earlyHitMult = 1;
 		}
 		x += offsetX;
-	new FlxTimer().start(1, function(tmr:FlxTimer) {
+	new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 			if (PlayState.allowVcr)
 				shader = PlayState.vcrShader;
 			});
