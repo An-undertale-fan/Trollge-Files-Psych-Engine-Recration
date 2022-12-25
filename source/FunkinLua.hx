@@ -1027,7 +1027,7 @@ class FunkinLua {
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
-			new FlxTimer().start(1, function(tmr:FlxTimer) {
+			new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 			if (PlayState.allowVcr)
 				leSprite.shader = PlayState.vcrShader;
 			});
@@ -1040,7 +1040,7 @@ class FunkinLua {
 			loadFrames(leSprite, image, spriteType);
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
-			new FlxTimer().start(1, function(tmr:FlxTimer) {
+			new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 			if (PlayState.allowVcr)
 				leSprite.shader = PlayState.vcrShader;
 			});
@@ -1058,7 +1058,7 @@ class FunkinLua {
 			var object:FlxSprite = Reflect.getProperty(getInstance(), obj);
 			if(object != null) {
 				object.makeGraphic(width, height, colorNum);
-				new FlxTimer().start(1, function(tmr:FlxTimer) {
+				new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 			if (PlayState.allowVcr)
 				object.shader = PlayState.vcrShader;
 			});
