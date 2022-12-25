@@ -1586,7 +1586,7 @@ class PlayState extends MusicBeatState
 				}
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ready', 'set', 'go']);
+				introAssets.set('default', ['ready', 'set', 'go', 'end']);
 				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
 
 				var introAlts:Array<String> = introAssets.get('default');
@@ -1608,6 +1608,10 @@ class PlayState extends MusicBeatState
 				switch (swagCounter)
 				{
 					case 0:
+						var blackIntro:FlxSprite;
+						blackIntro.makeGraphic(1280, 720, 0x000000);
+						blackIntro.screenCenter();
+						add(blackIntro);
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
 						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
@@ -1670,6 +1674,27 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
 					case 4:
+						countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[3]));
+						countdownGo.scrollFactor.set();
+
+						countdownGo.updateHitbox();
+
+						countdownGo.screenCenter();
+						countdownGo.antialiasing = antialias;
+						add(countdownGo);
+						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								remove(countdownGo);
+								countdownGo.destroy();
+							}
+						});
+						private var _tween:FlxTween;
+						_tween = new FlxTween(null, null, 0.7, false);
+						_tween.tween(blackIntro, "alpha", 0, FlxEase.quadInOut);
+						FlxTween.add(_tween);
+						_tween.onComplete = onTweenComplete;
 				}
 
 				notes.forEachAlive(function(note:Note) {
@@ -4563,15 +4588,21 @@ class PlayState extends MusicBeatState
 	public function addVcr(movement:Bool) {
 		allowVcr = true;
 		vcrUpdate = movement;
-		new FlxTimer().start(1, function(tmr:FlxTimer) {
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+	blackIntro.shader = vcrShader;
+	countdownReady.shader = vcrShader;
+	countdownSet.shader = vcrShader;
+	countdownGo.shader = vcrShader;
 	healthBarBG.shader = vcrShader;
 	healthBar.shader = vcrShader;
 	botplayTxt.shader = vcrShader;
 	scoreTxt.shader = vcrShader;
-	countdownGo.shader = vcrShader;
-	countdownSet.shader = vcrShader;
-	countdownReady.shader = vcrShader;
 	strumLine.shader = vcrShader;
 		});
 	}
+	private function onTweenComplete():Void
+		{
+			remove(blackIntro);
+			blackIntro.destroy();
+		}
 }
