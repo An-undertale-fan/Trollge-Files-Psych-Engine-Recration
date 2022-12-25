@@ -1690,11 +1690,14 @@ class PlayState extends MusicBeatState
 								countdownGo.destroy();
 							}
 						});
-						private var _tween:FlxTween;
-						_tween = new FlxTween(null, null, 0.7, false);
-						_tween.tween(blackIntro, "alpha", 0, FlxEase.quadInOut);
-						FlxTween.add(_tween);
-						_tween.onComplete = onTweenComplete;
+						FlxTween.tween(blackIntro, {alpha: 0}, 0.7, {
+							ease: FlxEase.quadInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								remove(blackIntro);
+								blackIntro.destroy();
+							}
+						});
 				}
 
 				notes.forEachAlive(function(note:Note) {
@@ -4589,10 +4592,12 @@ class PlayState extends MusicBeatState
 		allowVcr = true;
 		vcrUpdate = movement;
 		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+	if (countdownGo != null) {
 	blackIntro.shader = vcrShader;
 	countdownReady.shader = vcrShader;
 	countdownSet.shader = vcrShader;
 	countdownGo.shader = vcrShader;
+	}
 	healthBarBG.shader = vcrShader;
 	healthBar.shader = vcrShader;
 	botplayTxt.shader = vcrShader;
@@ -4600,9 +4605,4 @@ class PlayState extends MusicBeatState
 	strumLine.shader = vcrShader;
 		});
 	}
-	private function onTweenComplete():Void
-		{
-			remove(blackIntro);
-			blackIntro.destroy();
-		}
 }
