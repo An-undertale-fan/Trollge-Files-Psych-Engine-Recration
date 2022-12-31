@@ -51,9 +51,8 @@ class SUtil
 		#elseif ios
 		daPath = LimeSystem.applicationStorageDirectory;
 		#end
+
 		return daPath;
-        if (!FileSystem.exists(daPath + Path.directory(daPath)))
-            SUtil.mkDirs(Path.directory(daPath));
 	}
 
 	/**
@@ -86,26 +85,8 @@ class SUtil
 		if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 			&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
 		{
-        if (!FileSystem.exists( SUtil.getPath() + 'assets'))
-			{
-			FileSystem.createDirectory(SUtil.getPath() + 'assets');
-			}
-
-         if (!FileSystem.exists( SUtil.getPath() + 'mods'))
-            {
-                FileSystem.createDirectory(SUtil.getPath() + 'mods');
-            }
-
-         if ((FileSystem.exists( SUtil.getPath() + 'assets') && !FileSystem.isDirectory( SUtil.getPath() + 'assets')) && (FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods')) ||
-
-        (FileSystem.exists( SUtil.getPath() + 'assets') && !FileSystem.isDirectory( SUtil.getPath() + 'assets')) ||
-
-        (FileSystem.exists( SUtil.getPath() + 'mods') && !FileSystem.isDirectory( SUtil.getPath() + 'mods')))
-			{
-				Lib.application.window.alert("Woops, Look Like A Problem Happend While Trying To Cpoy The Game Files!\n Please Try Cpying The Game Data From The Apk To "+  SUtil.getPath +  " In This Case.",
-					'Error!');
-				LimeSystem.exit(1);
-			}
+			for (file in Assets.list().filter(folder -> folder.contains('assets/videos')))
+				SUtil.copyContent(file, SUtil.getPath() + file);
 		}
 		#end
 	}
@@ -154,16 +135,16 @@ class SUtil
 		#if sys
 		try
 		{
-			if (!FileSystem.exists( SUtil.getPath() + 'logs'))
-				FileSystem.createDirectory( SUtil.getPath() + 'logs');
+			if (!FileSystem.exists(SUtil.getPath() + 'logs'))
+				FileSystem.createDirectory(SUtil.getPath() + 'logs');
 
-			File.saveContent( SUtil.getPath()
+			File.saveContent(SUtil.getPath()
 				+ 'logs/'
 				+ Lib.application.meta.get('file')
 				+ '-'
 				+ Date.now().toString().replace(' ', '-').replace(':', "'")
 				+ '.log',
-				msg);
+				msg + '\n');
 		}
 		catch (e:Dynamic)
 		{
@@ -216,10 +197,10 @@ class SUtil
 	{
 		try
 		{
-			if (!FileSystem.exists( SUtil.getPath() + 'saves'))
-				FileSystem.createDirectory( SUtil.getPath() + 'saves');
+			if (!FileSystem.exists(SUtil.getPath() + 'saves'))
+				FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
-			File.saveContent( SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
 			#if android
 			Toast.makeText("File Saved Successfully!", Toast.LENGTH_LONG);
 			#end
