@@ -64,7 +64,7 @@ import Vcr;
 import ChromaticAberration;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
-import vlc.VLCBitmap;
+import VideoHandler;
 
 using StringTools;
 
@@ -1360,8 +1360,8 @@ public function startVideo(name:String) {
 			return;
 		}
 
-		var video:VLCBitmap = new VLCBitmap();
-		video.play(filepath);
+		var video:VideoHandler = new VideoHandler();
+		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
 			startAndEnd();
