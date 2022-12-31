@@ -1221,10 +1221,6 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
 		vcrShader = new Vcr();
-		var blackIntro:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
-			-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
-			blackIntro.scrollFactor.set();
-		add(blackIntro);
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -1688,14 +1684,6 @@ class PlayState extends MusicBeatState
 							{
 								remove(countdownGo);
 								countdownGo.destroy();
-							}
-						});
-						FlxTween.tween(blackIntro, {alpha: 0}, 0.7, {
-							ease: FlxEase.quadInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								remove(blackIntro);
-								blackIntro.destroy();
 							}
 						});
 				}
@@ -4593,7 +4581,6 @@ class PlayState extends MusicBeatState
 		vcrUpdate = movement;
 		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 		if (countdownGo != null) {
-	blackIntro.shader = vcrShader;
 	countdownReady.shader = vcrShader;
 	countdownSet.shader = vcrShader;
 	countdownGo.shader = vcrShader;
