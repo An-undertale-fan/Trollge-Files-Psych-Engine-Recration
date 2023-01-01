@@ -4561,7 +4561,7 @@ public function startVideo(name:String) {
 			camOther.setFilters([ShadersHandler.chromaticAberration]);
 		}
 	}
-	public function addVcr(movement:Bool) {
+	public function addVcr(usedCam:String = '', ?movement:Bool = false) {
 		allowVcr = true;
 		vcrUpdate = movement;
 		switch(usedCam) {
@@ -4576,7 +4576,7 @@ public function startVideo(name:String) {
 			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 			default:
-			camGame.setFilters([ShadersHandler.chromaticAberration]);
+			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 		}
