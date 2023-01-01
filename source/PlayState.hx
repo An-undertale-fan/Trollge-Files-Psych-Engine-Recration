@@ -75,6 +75,7 @@ class PlayState extends MusicBeatState
 	public static var chromaticAberrationShader:ChromaticAberration;
 	public static var chromeVal:Float = 0;
 	public static var allowChrome:Bool;
+	public static var vcrDistortion:VCRDistortionEffect;
 	public static var allowVcr:Bool;
 	public static var vcrUpdate:Bool = false;
 	public var camGameShaders:Array<ShaderEffect> = [];
@@ -1221,7 +1222,7 @@ class PlayState extends MusicBeatState
 
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
-		var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
+		vcrDistortion = new VCRDistortionEffect();
 	}
 
 	function set_songSpeed(value:Float):Float
