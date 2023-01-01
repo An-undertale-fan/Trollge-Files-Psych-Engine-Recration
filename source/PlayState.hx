@@ -61,7 +61,7 @@ import sys.FileSystem;
 import Shaders;
 import ShadersHandler;
 import VCRDistortionEffect;
-import VCRDistortionShader;
+import VCRDistortionEffect.VCRDistortionShader;
 import ChromaticAberration;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
