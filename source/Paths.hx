@@ -238,6 +238,12 @@ class Paths
 		return returnAsset;
 	}
 
+	inline static public function imageString(key:String, ?library:String):String
+	{
+  		var returnAsset:FlxGraphic = returnGraphic(key, library);
+		return returnAsset.key;
+	}
+
 	public static function achievementImage(key:String):String {
 		#if MODS_ALLOWED
 		var modKey:String = modsImages(key);
