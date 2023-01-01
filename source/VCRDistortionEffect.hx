@@ -20,7 +20,7 @@ class VCRDistortionEffect
     shader.noiseOn.value = [true];
     shader.glitchModifier.value = [1];
     shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
-    var noise = Assets.getBitmapData(Paths.image("noise2") as String); //Thanks chatGPT AI lmao
+    var noise = Assets.getBitmapData(Paths.imageString("noise2")); //Thanks chatGPT AI lmao //nvm fuck you chatGPT
     shader.noiseTex.input = noise;
     shader.curvateOn.value = [true];
   }
