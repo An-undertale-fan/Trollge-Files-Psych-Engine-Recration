@@ -1027,10 +1027,6 @@ class FunkinLua {
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
-			new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-			if (PlayState.allowVcr)
-				leSprite.shader = PlayState.vcrShader;
-			});
 		});
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
@@ -1040,10 +1036,6 @@ class FunkinLua {
 			loadFrames(leSprite, image, spriteType);
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
-			new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-			if (PlayState.allowVcr)
-				leSprite.shader = PlayState.vcrShader;
-			});
 		});
 
 		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int, height:Int, color:String) {
@@ -1058,10 +1050,6 @@ class FunkinLua {
 			var object:FlxSprite = Reflect.getProperty(getInstance(), obj);
 			if(object != null) {
 				object.makeGraphic(width, height, colorNum);
-				new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-			if (PlayState.allowVcr)
-				object.shader = PlayState.vcrShader;
-			});
 			}
 		});
 		Lua_helper.add_callback(lua, "addAnimationByPrefix", function(obj:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true) {
