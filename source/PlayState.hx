@@ -1575,7 +1575,7 @@ public function startVideo(name:String) {
 				}
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ready', 'set', 'go', 'end']);
+				introAssets.set('default', ['go', 'set',  'ready',  'end']);
 				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
 
 				var introAlts:Array<String> = introAssets.get('default');
