@@ -60,7 +60,8 @@ import sys.FileSystem;
 #end
 import Shaders;
 import ShadersHandler;
-import Vcr;
+import VCRDistortionEffect;
+import VCRDistortionShader;
 import ChromaticAberration;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
@@ -72,7 +73,6 @@ class PlayState extends MusicBeatState
 {
 	//shaders stuff
 	public static var chromaticAberrationShader:ChromaticAberration;
-	public static var vcrShader:Vcr;
 	public static var chromeVal:Float = 0;
 	public static var allowChrome:Bool;
 	public static var allowVcr:Bool;
@@ -1221,7 +1221,7 @@ class PlayState extends MusicBeatState
 
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
-		vcrShader = new Vcr();
+		var vcrDistortion:VCRDistortionEffect = new VCRDistortionEffect();
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -2336,7 +2336,7 @@ public function startVideo(name:String) {
 
 		super.update(elapsed);
 		if (allowVcr && vcrUpdate)
-			vcrShader.update(elapsed);
+			vcrDistortion.update(elapsed);
 
 		if (allowChrome)
 			ShadersHandler.setChrome(chromeVal);
@@ -3363,8 +3363,6 @@ public function startVideo(name:String) {
 		//
 
 		var rating:FlxSprite = new FlxSprite();
-		if (allowVcr)
-		rating.shader = vcrShader;
 
 		var score:Int = 350;
 
@@ -3503,8 +3501,6 @@ public function startVideo(name:String) {
 
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
-			if (allowVcr)
-				numScore.shader = vcrShader;
 
 			if (!PlayState.isPixelStage)
 			{
@@ -4568,17 +4564,21 @@ public function startVideo(name:String) {
 	public function addVcr(movement:Bool) {
 		allowVcr = true;
 		vcrUpdate = movement;
-		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-		if (countdownGo != null) {
-	countdownReady.shader = vcrShader;
-	countdownSet.shader = vcrShader;
-	countdownGo.shader = vcrShader;
+		switch(usedCam) {
+			case 'camGame' | 'camGAME' | 'game':
+			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			case 'camHud' | 'camHUD' | 'hud':
+			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			case 'camOTHER' |  'camOther' | 'other':
+			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			case '' | 'all' | 'full':
+			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			default:
+			camGame.setFilters([ShadersHandler.chromaticAberration]);
+			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
 		}
-	healthBarBG.shader = vcrShader;
-	healthBar.shader = vcrShader;
-	botplayTxt.shader = vcrShader;
-	scoreTxt.shader = vcrShader;
-	strumLine.shader = vcrShader;
-		});
 	}
 }
