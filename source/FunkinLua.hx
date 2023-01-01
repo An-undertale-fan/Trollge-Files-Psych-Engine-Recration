@@ -1797,8 +1797,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
 			//PlayState.instance.clearShaderFromCamera(camera);
 		});
-		Lua_helper.add_callback(lua, "addVcrShader", function(allowEffects:Bool = false) {
-			PlayState.instance.addVcr(allowEffects);
+		Lua_helper.add_callback(lua, "addVcrShader", function(cam:String = '', ?allowEffects:Bool = false) {
+			PlayState.instance.addVcr(cam, allowEffects);
 		});
 		Lua_helper.add_callback(lua, "addChromeShader", function(value:Float, camera:String) {
 			PlayState.instance.addChrome(value, camera);
