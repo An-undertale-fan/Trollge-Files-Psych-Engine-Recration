@@ -6,14 +6,11 @@ import openfl.utils.Assets;
 import flixel.FlxG;
 import openfl.Lib;
 import flixel.math.FlxPoint;
-import openfl.filters.BitmapFilter;
 
 class VCRDistortionEffect
 {
-  public static var shader:VCRDistortionShader;
-  public function new():Void
-    {
-    shader = new VCRDistortionShader();
+  public var shader:VCRDistortionShader = new VCRDistortionShader();
+  public function new(){
     shader.iTime.value = [0];
     shader.vignetteOn.value = [true];
     shader.perspectiveOn.value = [true];
@@ -66,7 +63,7 @@ class VCRDistortionEffect
   }
 }
 
-class VCRDistortionShader extends BitmapFilter
+class VCRDistortionShader extends FlxShader
 {
 
   @:glFragmentSource('
