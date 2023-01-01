@@ -92,10 +92,6 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 		antialiasing = ClientPrefs.globalAntialiasing;
 		var library:String = null;
-		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-			if (PlayState.allowVcr)
-				shader = PlayState.vcrShader;
-			});
 		
 		switch (curCharacter)
 		{
