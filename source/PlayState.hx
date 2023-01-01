@@ -1223,7 +1223,6 @@ class PlayState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
 		vcrDistortion = new VCRDistortionEffect();
-		add(vcrDistortion);
 	}
 
 	function set_songSpeed(value:Float):Float
