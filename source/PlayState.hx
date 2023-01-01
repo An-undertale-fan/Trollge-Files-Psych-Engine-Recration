@@ -4567,19 +4567,19 @@ public function startVideo(name:String) {
 		vcrUpdate = movement;
 		switch(usedCam) {
 			case 'camGame' | 'camGAME' | 'game':
-			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camGame.setFilters([vcrDistortion.shader]);
 			case 'camHud' | 'camHUD' | 'hud':
-			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camHUD.setFilters([vcrDistortion.shader]);
 			case 'camOTHER' |  'camOther' | 'other':
-			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camOther.setFilters([vcrDistortion.shader]);
 			case '' | 'all' | 'full':
-			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
-			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
-			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camGame.setFilters([vcrDistortion.shader]);
+			camHUD.setFilters([vcrDistortion.shader]);
+			camOther.setFilters([vcrDistortion.shader]);
 			default:
-			camGame.setFilters([new ShaderFilter(vcrDistortion.shader)]);
-			camHUD.setFilters([new ShaderFilter(vcrDistortion.shader)]);
-			camOther.setFilters([new ShaderFilter(vcrDistortion.shader)]);
+			camGame.setFilters([vcrDistortion.shader]);
+			camHUD.setFilters([vcrDistortion.shader]);
+			camOther.setFilters([vcrDistortion.shader]);
 		}
 	}
 }
