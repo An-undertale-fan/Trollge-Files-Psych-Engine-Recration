@@ -24,10 +24,6 @@ class NoteSplash extends FlxSprite
 
 		setupNoteSplash(x, y, note);
 		antialiasing = ClientPrefs.globalAntialiasing;
-		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
-			if (PlayState.allowVcr)
-				shader = PlayState.vcrShader;
-			});
 	}
 
 	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
