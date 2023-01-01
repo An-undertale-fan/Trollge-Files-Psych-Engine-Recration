@@ -6,64 +6,67 @@ import openfl.utils.Assets;
 import flixel.FlxG;
 import openfl.Lib;
 import flixel.math.FlxPoint;
+import openfl.filters.BitmapFilter;
 
 class VCRDistortionEffect
 {
-  public var shader:VCRDistortionShader = new VCRDistortionShader();
-  public function new(){
-    shader.iTime.value = [0];
-    shader.vignetteOn.value = [true];
-    shader.perspectiveOn.value = [true];
-    shader.distortionOn.value = [true];
-    shader.scanlinesOn.value = [true];
-    shader.vignetteMoving.value = [true];
-    shader.noiseOn.value = [true];
-    shader.glitchModifier.value = [1];
-    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
-    var noise = Assets.getBitmapData(Paths.imageString("noise2")); //Thanks chatGPT AI lmao //nvm fuck you chatGPT
-    shader.noiseTex.input = noise;
-    shader.curvateOn.value = [true];
+  public static var shader:VCRDistortionShader;
+  public function new():Void
+    {
+    shader = new VCRDistortionShader();
+    shader.data.iTime.value = [0];
+    shader.data.vignetteOn.value = [true];
+    shader.data.perspectiveOn.value = [true];
+    shader.data.distortionOn.value = [true];
+    shader.data.scanlinesOn.value = [true];
+    shader.data.vignetteMoving.value = [true];
+    shader.data.noiseOn.value = [true];
+    shader.data.glitchModifier.value = [1];
+    shader.data.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
+    var noise = Assets.getBitmapData(Paths.imageString("noise2"));
+    shader.data.noiseTex.input = noise;
+    shader.data.curvateOn.value = [true];
   }
 
   public function update(elapsed:Float){
-    shader.iTime.value[0] += elapsed;
-    shader.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
+    shader.data.iTime.value[0] += elapsed;
+    shader.data.iResolution.value = [Lib.current.stage.stageWidth,Lib.current.stage.stageHeight];
   }
 
   public function setCurvate(state:Bool){
-    shader.curvateOn.value[0] = state;
+    shader.data.curvateOn.value[0] = state;
   }
 
   public function setVignette(state:Bool){
-    shader.vignetteOn.value[0] = state;
+    shader.data.vignetteOn.value[0] = state;
   }
 
   public function setNoise(state:Bool){
-    shader.noiseOn.value[0] = state;
+    shader.data.noiseOn.value[0] = state;
   }
 
   public function setPerspective(state:Bool){
-    shader.perspectiveOn.value[0] = state;
+    shader.data.perspectiveOn.value[0] = state;
   }
 
   public function setGlitchModifier(modifier:Float){
-    shader.glitchModifier.value[0] = modifier;
+    shader.data.glitchModifier.value[0] = modifier;
   }
 
   public function setDistortion(state:Bool){
-    shader.distortionOn.value[0] = state;
+    shader.data.distortionOn.value[0] = state;
   }
 
   public function setScanlines(state:Bool){
-    shader.scanlinesOn.value[0] = state;
+    shader.data.scanlinesOn.value[0] = state;
   }
 
   public function setVignetteMoving(state:Bool){
-    shader.vignetteMoving.value[0] = state;
+    shader.data.vignetteMoving.value[0] = state;
   }
 }
 
-class VCRDistortionShader extends FlxShader
+class VCRDistortionShader extends BitmapFilter
 {
 
   @:glFragmentSource('
